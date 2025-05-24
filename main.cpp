@@ -76,23 +76,24 @@ int main(int argc, char** argv){
     //  Find all movies that have that prefix and store them in an appropriate data structure
     //  If no movie with that prefix exists print the following message
     auto start = chrono::high_resolution_clock::now();
-    for(const auto& prefix: prefixes){
+   
+for(const auto& prefix: prefixes){
 	auto matches = db.rangeForPrefix(prefix);
 	if(matches.empty()){
-		cout << "No movies found with prefix "<<"<replace with prefix>" << endl;
+		cout << "No movies found with prefix " << prefix << endl;
 		continue;
 	}
+	
 	sort(matches.begin(), matches.end(), [](const Movie* a, const Movie* b){
 		if(a->rating != b->rating) return a->rating > b->rating;
 		return a->name < b->name;
-
-
-    });
-        for(const auto* m : matches){
-	cout << m->name << ", " << fixed << setprecision(1) << m->rating << endl;
+	});
+	for(const auto* m : matches){
+		cout << m->name << ", " << fixed << setprecision(1) << m->rating << endl;
 	}
 	cout << endl;
-	}
+}
+
 for(const auto& prefix: prefixes){
 	auto matches = db.rangeForPrefix(prefix);
 	if(!matches.empty()){
